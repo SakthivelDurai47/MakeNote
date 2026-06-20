@@ -1,29 +1,25 @@
 import mongoose from "mongoose";
 
 //defines the structure of the data
-const noteSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    title: {
+    username: {
       type: String,
       required: true,
+      unique: true,
       trim: true,
     },
-    content: {
+
+    email: {
       type: String,
       required: true,
+      unique: true, // ensures that each email is unique in the database
+      trim: true,
+      lowercase: true,
     },
-    pinned: {
-      type: Boolean,
-      default: false,
-    },
-    tags: {
-      type: [String],
-      default: [],
+    password: {
+      type: String,
+      required: true,
     },
   },
   {
@@ -32,6 +28,6 @@ const noteSchema = new mongoose.Schema(
 );
 
 // creates the model based on the schema
-const Note = mongoose.model("Note", noteSchema);
+const User = mongoose.model("User", userSchema);
 
-export default Note;
+export default User;

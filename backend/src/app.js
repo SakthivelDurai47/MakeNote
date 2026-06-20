@@ -1,5 +1,6 @@
 import express from "express";
-import router from "./routes/notesRouter.js";
+import noteRouter from "./routes/notesRouter.js";
+import userRouter from "./routes/userRouter.js";
 import { connectDB } from "./config/db.js";
 import dotenv from "dotenv";
 import rateLimiter from "./middleware/rateLimiter.js";
@@ -24,7 +25,8 @@ app.use(express.json()); // used to parse the JSON body, must need to access req
 app.use(rateLimiter); // used to set rate limit to the requests
 
 //routes to handle http requests
-app.use("/api/notes", router);
+app.use("/api/notes", noteRouter);
+app.use("/api/users", userRouter);
 
 //connecting to database
 connectDB().then(() => {

@@ -3,7 +3,9 @@ import Note from "../models/Note.js";
 // to get all the notes from the database
 export async function getAllNotes(req, res) {
   try {
-    const notes = await Note.find().sort({ createdAt: -1 }); // gets all the notes and sor them in decending order based on createdAt
+    const notes = await Note.find({ user: req.user.userId }).sort({
+      createdAt: -1,
+    }); // gets all the notes and sor them in decending order based on createdAt
     res.status(200).json(notes);
   } catch (error) {
     console.log("Error in getAllNotes", error);
@@ -14,7 +16,10 @@ export async function getAllNotes(req, res) {
 // to get a single note by using id from the database
 export async function getNoteById(req, res) {
   try {
-    const note = await Note.findById(req.params.id); //gets id from the request body of the url
+    const note = await Note.findOne({
+      _id: req.params.id,
+      user: req.user.userId,
+    }); //gets id from the request body of the url
     if (!note) return res.status(404).json({ message: "Note not found" });
     res.status(200).json(note);
   } catch (error) {
@@ -26,8 +31,8 @@ export async function getNoteById(req, res) {
 // used to create a new note
 export async function createNotes(req, res) {
   try {
-    const { title, content } = req.body; //gets title and content from the body
-    const newNote = new Note({ title, content }); //creates a Note
+    const { title, content, tags } = req.body; //gets title and content from the body
+    const newNote = new Note({ title, content, tags, user: req.user.userId }); //creates a Note along with an user Id
     const createdNote = await newNote.save(); //saves the new note in database
     res.status(201).json(createdNote);
   } catch (error) {
@@ -39,10 +44,13 @@ export async function createNotes(req, res) {
 //used to update a specific note using the id
 export async function updateNotes(req, res) {
   try {
-    const { title, content } = req.body;
-    const updatedNote = await Note.findByIdAndUpdate(
-      req.params.id,
-      { title, content },
+    const { title, content, tags } = req.body;
+    const updatedNote = await Note.findOneAndUpdate(
+      {
+        _id: req.params.id,
+        user: req.user.userId,
+      },
+      { title, content, tags },
       { new: true }, // returns the updated note
     );
     if (!updatedNote)
@@ -57,7 +65,10 @@ export async function updateNotes(req, res) {
 // used to delete a specific note using the id
 export async function deleteNotes(req, res) {
   try {
-    const deletedNote = await Note.findByIdAndDelete(req.params.id);
+    const deletedNote = await Note.findOneAndDelete({
+      _id: req.params.id,
+      user: req.user.userId,
+    });
     if (!deletedNote)
       return res.status(404).json({ message: "Note not found" });
     res.status(200).json({ message: "Note Deleted Successfully" });
