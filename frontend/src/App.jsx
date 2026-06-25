@@ -1,16 +1,21 @@
 import React from "react";
 import { Route, Routes } from "react-router";
 import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
 import CreatePage from "./pages/CreatePage";
 import NoteDetailsPage from "./pages/NoteDetailsPage";
 import toast from "react-hot-toast";
+import RegistrationPage from "./pages/RegistrationPage";
+import LandingPage from "./pages/LandingPage";
 
 const App = () => {
   return (
-    <div className="relatice h-full w-full">
-      <div className="absolute inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_60%,#3abdf840_100%)]"></div>
+    <div className=" h-full w-full">
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/register" element={<RegistrationPage />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/create" element={<CreatePage />} />
         <Route path="/note/:id" element={<NoteDetailsPage />} />
       </Routes>

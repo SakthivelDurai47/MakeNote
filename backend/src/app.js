@@ -21,6 +21,7 @@ app.use(
     origin: "http://localhost:5173",
   }),
 );
+
 app.use(express.json()); // used to parse the JSON body, must need to access req.body
 app.use(rateLimiter); // used to set rate limit to the requests
 

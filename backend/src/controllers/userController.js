@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 //Create a new user
 export async function createUser(req, res) {
   try {
-    const { username, email, password } = req.body; //gets username, email and password from the body
+    const { name, username, email, password } = req.body; //gets username, email and password from the body
     const existingEmail = await User.findOne({ email });
 
     if (existingEmail) {
@@ -22,9 +22,15 @@ export async function createUser(req, res) {
       });
     }
     const hashedPassword = await bcrypt.hash(password, 10); //hashes the password using bcrypt with a salt round of 10
-    const newUser = new User({ username, email, password: hashedPassword }); //creates a User
+    const newUser = new User({
+      name,
+      username,
+      email,
+      password: hashedPassword,
+    }); //creates a User
     const createdUser = await newUser.save(); //saves the new user in database
     res.status(201).json({
+      name: createdUser.name,
       id: createdUser._id,
       username: createdUser.username,
       email: createdUser.email,
@@ -49,9 +55,15 @@ export async function deleteUser(req, res) {
 
 export async function loginUser(req, res) {
   try {
-    const { email, password } = req.body;
-    const normalizedEmail = email.toLowerCase().trim();
-    const user = await User.findOne({ email: normalizedEmail });
+    const { identifier, password } = req.body;
+    const normalizedIdentifier = identifier.toLowerCase().trim();
+    const user = await User.findOne({
+      $or: [
+        { email: normalizedIdentifier },
+        { username: normalizedIdentifier },
+      ],
+    });
+
     if (!user)
       return res.status(401).json({
         message: "Invalid credentials",
@@ -77,6 +89,7 @@ export async function loginUser(req, res) {
     res.status(200).json({
       token,
       user: {
+        name: user.name,
         id: user._id,
         username: user.username,
         email: user.email,
