@@ -31,7 +31,6 @@ function RegistrationPage() {
       localStorage.setItem("user", JSON.stringify(user));
       toast.success("Logged in Succesfully");
       navigate("/home");
-      toast.success("You can login now using the created account");
     } catch (e) {
       if (e.response.status === 401) {
         toast.error("Invalid Credentials");
@@ -138,14 +137,17 @@ function RegistrationPage() {
               </div>
 
               <div className="flex items-center justify-between text-sm">
-                <label className="label cursor-pointer gap-2">
-                  <input type="checkbox" className="checkbox checkbox-sm" />
-                  <span>Remember me</span>
-                </label>
-
-                <a href="#" className="link link-primary">
-                  Forgot password?
-                </a>
+                <p
+                  onClick={() => {
+                    toast.error("Nah ur cooked :(");
+                    setTimeout(() => {
+                      toast.error("contact the dev");
+                    }, 1000);
+                  }}
+                  className="link link-primary text-center"
+                >
+                  Forgot your password?
+                </p>
               </div>
 
               <button

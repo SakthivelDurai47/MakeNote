@@ -23,7 +23,7 @@ function CreatePage() {
         content,
       });
       toast.success("Note Created!");
-      navigate("/");
+      navigate("/home");
     } catch (e) {
       if (e.response.status === 429) {
         toast.error("Too Many Requests! Slow Down");
@@ -40,7 +40,7 @@ function CreatePage() {
     <div className="min-h-screen bg-base-200">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
-          <Link to={"/"} className="btn btn-ghost mb-5">
+          <Link to={"/home"} className="btn btn-ghost mb-5">
             <ArrowLeftIcon className="size-5" />
             Back to Notes
           </Link>

@@ -1,18 +1,50 @@
-import { ArrowRight, FileText, Pin, Tags, Search, Shield } from "lucide-react";
-import { Link } from "react-router";
+import {
+  ArrowRight,
+  FileText,
+  Pin,
+  Tags,
+  Search,
+  Shield,
+  Feather,
+} from "lucide-react";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router";
+import toast from "react-hot-toast";
+import ThemeSelector from "../components/ThemeSelector";
 
 export default function LandingPage() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    const userObject = JSON.parse(user);
+
+    if (user) {
+      navigate("/home");
+      toast.success(`Welcome back ${userObject.name}`);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-base-100">
       {/* Navbar */}
       <div className="navbar px-6 lg:px-16">
         <div className="flex-1">
-          <a className="text-2xl font-bold">NoteFlow</a>
+          <Link to="/" className="flex items-center gap-2">
+            <Feather className="size-8 text-primary" />
+            <h1 className="text-3xl font-bold  font-mono tracking-tight">
+              MakeNotes
+            </h1>
+          </Link>
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 justify-center items-center">
+          <div>
+            <ThemeSelector />
+          </div>
+
           <Link to="/login">
-            <button className="btn btn-ghost">Login</button>
+            <button className="btn btn-outline btn-primary">Login</button>
           </Link>
           <Link to="/register">
             <button className="btn btn-primary">Register</button>

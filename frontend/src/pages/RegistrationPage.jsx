@@ -12,14 +12,35 @@ function RegistrationPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const loginUser = async () => {
+    try {
+      const response = await apiUrl.post("users/login", {
+        identifier: email,
+        password,
+      });
+
+      const { token, user } = response.data;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      navigate("/home");
+      return response.data;
+    } catch (e) {
+      console.log("error occured", e);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!name.trim() || !email.trim() || !username.trim() || !password.trim()) {
       toast.error("All fields must be filled");
       return;
     }
-    console.log({ name, email, password, username });
+
     setLoading(true);
+
     try {
       await apiUrl.post("users/register", {
         name,
@@ -27,11 +48,16 @@ function RegistrationPage() {
         username,
         password,
       });
+
       toast.success("User Created");
-      navigate("/login");
-      toast.success("You can login now using the created account");
+
+      await toast.promise(loginUser(), {
+        loading: "Logging In...",
+        success: "Logged In Successfully",
+        error: "Login Failed",
+      });
     } catch (e) {
-      if (e.response.status === 429) {
+      if (e.response?.status === 429) {
         toast.error("Too Many Requests! Slow Down");
       } else {
         toast.error("Can't create user");

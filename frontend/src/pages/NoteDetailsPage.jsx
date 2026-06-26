@@ -50,7 +50,7 @@ function NoteDetailsPage() {
     try {
       await apiUrl.put(`/notes/${id}`, note);
       toast.success("Note Updated");
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       console.log("Error white Updating the note: ", error);
       toast.error("Faild to update note");
@@ -72,7 +72,7 @@ function NoteDetailsPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center justify-between mb-6">
-            <Link to="/" className="btn btn-ghost">
+            <Link to="/home" className="btn btn-ghost">
               <ArrowLeftIcon className="size-5" />
               Back to Notes
             </Link>
