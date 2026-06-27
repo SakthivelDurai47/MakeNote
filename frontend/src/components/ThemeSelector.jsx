@@ -1,31 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Palette } from "lucide-react";
 
 function ThemeSelector() {
   const userTheme = localStorage.getItem("theme");
   const [theme, setTheme] = useState(userTheme ? userTheme : "forest");
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
   return (
     <div>
       <div className="dropdown ">
         <div tabIndex={0} role="button" className="btn btn-ghost text-primary">
           Theme
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            className="inline-block h-2 w-2 fill-current opacity-60"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z" />
-            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
-            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
-            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
-            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
-          </svg>
+          <Palette className="size-4" />
         </div>
 
         <div

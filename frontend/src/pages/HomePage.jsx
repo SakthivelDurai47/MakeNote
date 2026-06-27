@@ -5,8 +5,11 @@ import RateLimited from "../components/RateLimited";
 import apiUrl from "../lib/axios.js";
 import toast from "react-hot-toast";
 import NoteNotFound from "../components/NoteNotFound";
+import { themeSetter } from "../lib/theme.js";
 
 function HomePage() {
+  themeSetter();
+
   const [isRateLimited, setIsRateLimited] = useState(false);
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);

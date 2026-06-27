@@ -3,8 +3,10 @@ import { UserPen } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import apiUrl from "../lib/axios";
 import toast from "react-hot-toast";
+import { themeSetter } from "../lib/theme";
 
 function RegistrationPage() {
+  themeSetter();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);

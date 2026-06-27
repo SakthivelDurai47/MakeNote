@@ -7,12 +7,17 @@ import {
   Shield,
   Feather,
 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import ThemeSelector from "../components/ThemeSelector";
 
 export default function LandingPage() {
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "forest");
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,7 +33,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-base-100">
       {/* Navbar */}
-      <div className="navbar px-6 lg:px-16">
+      <div className="navbar px-6 max-w-7xl mx-auto ">
         <div className="flex-1">
           <Link to="/" className="flex items-center gap-2">
             <Feather className="size-8 text-primary" />

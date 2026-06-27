@@ -11,13 +11,16 @@ function Navbar() {
           <Link to="/home" className="flex items-center gap-2">
             <Feather className="size-8 text-primary" />
             <h1 className="text-3xl font-bold  font-mono tracking-tight">
-              NoteBook
+              MakeNote
             </h1>
           </Link>
 
           <div className="flex items-center gap-3">
-            <Link to="/create" className="btn btn-primary">
-              <PlusIcon className="size-5" />
+            <Link
+              to="/create"
+              className="btn btn-primary btn-sm px-5 rounded-xl shadow-sm hover:shadow transition-all font-medium gap-2"
+            >
+              <PlusIcon className="size-4" />
               Add Note
             </Link>
 

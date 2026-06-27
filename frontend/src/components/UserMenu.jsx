@@ -20,7 +20,6 @@ function UserMenu() {
   };
 
   useEffect(() => {
-    console.log(theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
@@ -31,7 +30,7 @@ function UserMenu() {
         role="button"
         className="btn btn-circle btn-outline btn-primary"
       >
-        <User className="size-4 " />
+        <User className="size-5 " />
       </div>
       <div
         tabIndex="-1"
