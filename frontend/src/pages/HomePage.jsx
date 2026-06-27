@@ -44,7 +44,7 @@ function HomePage() {
         )}
         {notes.length === 0 && !isRateLimited && <NoteNotFound />}
         {notes.length > 0 && !isRateLimited && (
-          <div className="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(320px,1fr))]">
             {notes.map((note) => (
               <NoteCard key={note._id} note={note} setNotes={setNotes} />
             ))}

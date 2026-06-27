@@ -25,7 +25,7 @@ function UserMenu() {
   }, [theme]);
 
   return (
-    <div className="dropdown dropdown-end">
+    <div className="dropdown dropdown-end ">
       <div
         tabIndex={0}
         role="button"
@@ -35,7 +35,7 @@ function UserMenu() {
       </div>
       <div
         tabIndex="-1"
-        className="dropdown-content menu bg-base-200 rounded-box z-1 w-52 p-2 shadow-sm mt-5 border border-base-content/10"
+        className="dropdown-content menu bg-base-200 rounded-box z-1 w-70 p-2 shadow-sm mt-5 border border-base-content/10"
       >
         <div className="text-center mb-2 ">
           <div className="flex justify-center mb-3  ">
@@ -56,7 +56,7 @@ function UserMenu() {
               type="radio"
               name="theme-buttons"
               className="btn theme-controller join-item rounded-t-sm justify-start text-sm"
-              aria-label="Forest (Default)"
+              aria-label="Forest"
               value="forest"
               checked={theme === "forest"}
               onChange={(e) => setTheme(e.target.value)}
