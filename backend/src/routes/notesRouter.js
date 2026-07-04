@@ -5,6 +5,7 @@ import {
   getAllNotes,
   getNoteById,
   updateNotes,
+  togglePin,
 } from "../controllers/notesController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -17,5 +18,6 @@ noteRouter.get("/:id", protect, getNoteById);
 noteRouter.post("/", protect, createNotes);
 noteRouter.put("/:id", protect, updateNotes);
 noteRouter.delete("/:id", protect, deleteNotes);
+noteRouter.patch("/:id/pin", protect, togglePin);
 
 export default noteRouter;

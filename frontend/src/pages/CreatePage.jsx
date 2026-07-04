@@ -198,7 +198,7 @@ function CreatePage() {
 
           <input
             type="text"
-            className="input input-ghost flex-1 min-w-[200px] p-0 h-7 text-sm font-mono focus:bg-transparent focus:outline-none border-none text-base-content/80 "
+            className="input input-ghost flex-1 min-w-50 p-0 h-7 text-sm font-mono focus:bg-transparent focus:outline-none border-none text-base-content/80 "
             placeholder={
               tagsArray.length === 0
                 ? "Add tags (press space or comma to confirm)..."

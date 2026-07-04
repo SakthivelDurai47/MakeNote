@@ -4,6 +4,7 @@ import Note from "../models/Note.js";
 export async function getAllNotes(req, res) {
   try {
     const notes = await Note.find({ user: req.user.userId }).sort({
+      pinned: -1,
       createdAt: -1,
     }); // gets all the notes and sor them in decending order based on createdAt
     res.status(200).json(notes);
@@ -74,6 +75,27 @@ export async function deleteNotes(req, res) {
     res.status(200).json({ message: "Note Deleted Successfully" });
   } catch (error) {
     console.log("Error in deleteNotes", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
+export async function togglePin(req, res) {
+  try {
+    const note = await Note.findOne({
+      _id: req.params.id,
+      user: req.user.userId,
+    });
+
+    if (!note) {
+      return res.status(404).json({ message: "Note not found" });
+    }
+
+    note.pinned = !note.pinned; // Toggle the pinned status
+    await note.save();
+
+    res.status(200).json(note);
+  } catch (error) {
+    console.log("Error in togglePin", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 }

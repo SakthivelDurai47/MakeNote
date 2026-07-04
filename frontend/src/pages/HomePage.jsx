@@ -9,7 +9,6 @@ import { themeSetter } from "../lib/theme.js";
 
 function HomePage() {
   themeSetter();
-
   const [isRateLimited, setIsRateLimited] = useState(false);
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -47,9 +46,14 @@ function HomePage() {
         )}
         {notes.length === 0 && !isRateLimited && <NoteNotFound />}
         {notes.length > 0 && !isRateLimited && (
-          <div className="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(320px,1fr))]">
+          <div className="grid gap-5 grid-cols-[repeat(auto-fit,minmax(320px,1fr))]">
             {notes.map((note) => (
-              <NoteCard key={note._id} note={note} setNotes={setNotes} />
+              <NoteCard
+                key={note._id}
+                note={note}
+                setNotes={setNotes}
+                notes={notes}
+              />
             ))}
           </div>
         )}

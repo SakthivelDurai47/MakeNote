@@ -1,5 +1,5 @@
-import React from "react";
-import { Trash2, ArrowUpRight, Calendar, Tag } from "lucide-react";
+import React, { useState } from "react";
+import { Trash2, Calendar, Tag, Pin, PinOff } from "lucide-react";
 import { Link } from "react-router";
 import { formateDate } from "../lib/utils";
 import apiUrl from "../lib/axios";
@@ -8,7 +8,9 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 
-function NoteCard({ note, setNotes }) {
+function NoteCard({ note, setNotes, notes }) {
+  const [isPinned, setIsPinned] = useState(note.pinned);
+
   const handleDelete = async (e, id) => {
     e.preventDefault();
     e.stopPropagation();
@@ -25,14 +27,48 @@ function NoteCard({ note, setNotes }) {
     }
   };
 
+  const handlePin = async (e, id) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    try {
+      setIsPinned((prev) => !prev);
+      const { data: updatedNote } = await apiUrl.patch(`/notes/${id}/pin`);
+      setNotes(
+        notes
+          .map((note) => (note._id === updatedNote._id ? updatedNote : note))
+          .sort((a, b) => {
+            if (a.pinned !== b.pinned) {
+              return b.pinned - a.pinned;
+            }
+          }),
+      );
+
+      toast.success("Note Updated!");
+    } catch (e) {
+      setIsPinned((prev) => !prev);
+      console.error(e);
+      toast.error("Failed to pin/unpin note");
+    }
+  };
+
   return (
     <Link
       to={`/note/${note._id}`}
-      className="group relative flex flex-col justify-between min-h-[280px] sm:min-h-[300px] bg-base-200/40 hover:bg-base-200/80 border border-base-content/5 hover:border-base-content/10 rounded-2xl p-5 sm:p-6 transition-all duration-300 ease-out shadow-sm hover:shadow-md"
+      className="group relative flex flex-col justify-between min-h-70 sm:min-h-75 bg-base-200/40 hover:bg-base-200/80 border border-base-content/5 hover:border-base-content/10 rounded-2xl p-5 sm:p-6 transition-all duration-300 ease-out shadow-sm hover:shadow-md"
     >
       {/* Absolute Hover Action Icon */}
-      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-40 transition-opacity duration-300 text-base-content pointer-events-none">
-        <ArrowUpRight className="size-4" />
+      <div className="  absolute top-4 right-4 opacity-60 group-hover:opacity-80 transition-opacity duration-300 text-base-content ">
+        <button
+          onClick={(e) => handlePin(e, note._id)}
+          title={isPinned ? "Unpin Note" : "Pin Note"}
+        >
+          {isPinned ? (
+            <PinOff className="size-4 text-primary font-bold" />
+          ) : (
+            <Pin className="size-4" />
+          )}
+        </button>
       </div>
 
       <div className="flex flex-col gap-3">
@@ -141,7 +177,7 @@ function NoteCard({ note, setNotes }) {
           </div>
 
           {/* Premium Fade Out Shutter Overlay */}
-          <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-base-100 group-hover:from-base-200/80 via-transparent to-transparent pointer-events-none transition-colors duration-300" />
+          <div className="absolute bottom-0 left-0 right-0 h-10 bg-linear-to-t from-base-100 group-hover:from-base-200/80 via-transparent to-transparent pointer-events-none transition-colors duration-300" />
         </div>
       </div>
 
