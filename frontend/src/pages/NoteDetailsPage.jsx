@@ -243,7 +243,7 @@ function NoteDetailsPage() {
 
           <input
             type="text"
-            className="input input-ghost flex-1 min-w-[200px] p-0 h-7 text-sm font-mono focus:bg-transparent focus:outline-none border-none text-base-content "
+            className="input input-ghost flex-1 min-w-50 p-0 h-7 text-sm font-mono focus:bg-transparent focus:outline-none border-none text-base-content "
             placeholder={
               (note.tags || []).length === 0
                 ? "Add tags (press space or comma)..."
