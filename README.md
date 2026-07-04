@@ -2,8 +2,6 @@
 
 ## a simple CRUD application to make notes
 
----
-
 ### Features
 
 - User Registration & Login

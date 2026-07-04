@@ -1,7 +1,10 @@
 import axios from "axios";
 
+const BASE_URL =
+  import.meta.env.MODE === "development" ? "http://localhost:3000/api" : "/api";
+
 const apiUrl = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: BASE_URL,
 });
 // This interceptor runs automatically BEFORE every single request leaves your app
 apiUrl.interceptors.request.use(
