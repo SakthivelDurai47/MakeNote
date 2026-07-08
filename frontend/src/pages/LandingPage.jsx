@@ -44,16 +44,68 @@ export default function LandingPage() {
         </div>
 
         <div className="flex gap-2 justify-center items-center">
+          {/* Theme Selector: Always visible */}
           <div>
             <ThemeSelector />
           </div>
 
-          <Link to="/login">
-            <button className="btn btn-outline btn-primary">Login</button>
-          </Link>
-          <Link to="/register">
-            <button className="btn btn-primary">Register</button>
-          </Link>
+          {/* DESKTOP NAV: Hidden on mobile, flex on medium screens and up */}
+          <div className="hidden md:flex gap-2">
+            <Link to="/login">
+              <button className="btn btn-outline btn-primary">Login</button>
+            </Link>
+            <Link to="/register">
+              <button className="btn btn-primary">Register</button>
+            </Link>
+          </div>
+
+          {/* MOBILE NAV (Hamburger Dropdown): Flex on mobile, hidden on medium screens and up */}
+          <div className="dropdown dropdown-end md:hidden">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle"
+            >
+              {/* Hamburger Icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h7"
+                />
+              </svg>
+            </div>
+
+            {/* Dropdown Menu Content */}
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-300 rounded-box z-1 mt-3 w-52 p-2 shadow-2xl gap-1"
+            >
+              <li>
+                <Link
+                  to="/login"
+                  className="btn  btn-sm text-white text-center"
+                >
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/register"
+                  className="btn btn-primary btn-sm text-white text-center"
+                >
+                  Register
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 

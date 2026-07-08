@@ -10,9 +10,9 @@ function ThemeSelector() {
 
   return (
     <div>
-      <div className="dropdown ">
+      <div className="dropdown dropdown-end ">
         <div tabIndex={0} role="button" className="btn btn-ghost text-primary">
-          Theme
+          <span className="hidden sm:inline">Theme</span>
           <Palette className="size-4" />
         </div>
 
